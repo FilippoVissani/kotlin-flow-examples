@@ -30,10 +30,10 @@ jobs:
           fetch-depth: 0
 
       - name: Show Env
-        run: gradle --version
+        run: ./gradlew --version
 
       - name: Run tests
-        run: gradle test
+        run: ./gradlew test
 
   success:
     runs-on: ubuntu-latest
