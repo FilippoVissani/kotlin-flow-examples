@@ -1,0 +1,21 @@
+[versions]
+kotest = "5.6.1"
+kotlin = "1.8.20"
+
+[libraries]
+kotest-junit5-jvm = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotest" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-assertions-core-jvm = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
+
+[bundles]
+kotlin-testing = [
+    "kotest-junit5-jvm",
+    "kotest-assertions-core",
+    "kotest-assertions-core-jvm"
+]
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+dokka = "org.jetbrains.dokka:1.8.10"
+kotlinQA = "org.danilopianini.gradle-kotlin-qa:0.41.0"
+taskTree = "com.dorongold.task-tree:2.1.1"
