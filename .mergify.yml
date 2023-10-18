@@ -5,3 +5,9 @@ pull_request_rules:
     actions:
       merge:
         method: rebase
+
+  - name: continuously rebase pull request
+    conditions:
+        - base=main
+    actions:
+        rebase:
