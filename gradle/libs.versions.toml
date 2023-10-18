@@ -16,6 +16,6 @@ kotlin-testing = [
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-dokka = "org.jetbrains.dokka:1.8.10"
+dokka = "org.jetbrains.dokka:1.9.10"
 kotlinQA = "org.danilopianini.gradle-kotlin-qa:0.49.1"
 taskTree = "com.dorongold.task-tree:2.1.1"
