@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.*
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.assertThrows
 
 class FlowExamplesTest {
 
@@ -84,5 +85,53 @@ class FlowExamplesTest {
             FlowExamples.numbers()
                 .take(2) // take only the first two
                 .collect { value -> println(value) }
+        }
+
+    @Test
+    fun sum() =
+        runBlocking<Unit> {
+            val sum = (1..5).asFlow()
+                .map { it * it } // squares of numbers from 1 to 5
+                .reduce { a, b -> a + b } // sum them (terminal operator)
+            println(sum)
+        }
+
+    @Test
+    fun sequentialFlow() =
+        runBlocking<Unit> {
+
+            (1..5).asFlow()
+                .filter {
+                    println("Filter $it")
+                    it % 2 == 0
+                }
+                .map {
+                    println("Map $it")
+                    "string $it"
+                }.collect {
+                    println("Collect $it")
+                }
+        }
+
+    @Test
+    fun context() =
+        runBlocking<Unit> {
+            FlowExamples.simple6().collect { value -> FlowExamples.log("Collected $value") }
+        }
+
+    @Test
+    fun simple7() =
+        runBlocking<Unit> {
+            assertThrows<IllegalStateException> {
+                FlowExamples.simple7().collect { value -> println(value) }
+            }
+        }
+
+    @Test
+    fun simple8() =
+        runBlocking<Unit> {
+            FlowExamples.simple8().collect { value ->
+                FlowExamples.log("Collected $value")
+            }
         }
 }
