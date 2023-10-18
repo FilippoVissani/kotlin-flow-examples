@@ -1,14 +1,16 @@
 package io.github.filippovissani
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-// https://kotlinlang.org/docs/flow.html#flow-builders
-
+/**
+ * https://kotlinlang.org/docs/flow.html#flow-builders
+ */
 object FlowExamples {
-    // This code outputs 1, 2, 3, but it waits 1000ms before printing each one.
+
     fun simple1(): Sequence<Int> = sequence { // sequence builder
         for (i in 1..3) {
             Thread.sleep(1000) // pretend we are computing it

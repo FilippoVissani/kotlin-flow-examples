@@ -1,10 +1,11 @@
 package io.github.filippovissani
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeoutOrNull
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.assertThrows
 
 class FlowExamplesTest {
@@ -99,7 +100,6 @@ class FlowExamplesTest {
     @Test
     fun sequentialFlow() =
         runBlocking<Unit> {
-
             (1..5).asFlow()
                 .filter {
                     println("Filter $it")
