@@ -1,12 +1,7 @@
 plugins {
-    // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlinQA)
     alias(libs.plugins.dokka)
     alias(libs.plugins.taskTree)
-
-    // Apply the application plugin to add support for building a CLI application in Java.
-    application
 }
 
 repositories {
@@ -15,23 +10,9 @@ repositories {
 }
 
 dependencies {
-    // Align versions of all Kotlin components
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-
-    // Use the Kotlin JDK 8 standard library.
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
-    // Use the Kotlin test library.
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-}
-
-application {
-    // Define the main class for the application.
-    mainClass.set("io.github.filippovissani.AppKt")
+    implementation(libs.kotlinx.coroutines)
+    implementation(libs.bundles.kotlin.testing.common)
+    implementation(libs.kotest.runner.junit5.jvm)
 }
 
 tasks.named<Test>("test") {
