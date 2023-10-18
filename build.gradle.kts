@@ -11,11 +11,10 @@ repositories {
 
 dependencies {
     implementation(libs.kotlinx.coroutines)
-    implementation(libs.bundles.kotlin.testing.common)
-    implementation(libs.kotest.runner.junit5.jvm)
+    testImplementation(libs.bundles.kotlin.testing.common)
+    testImplementation(libs.kotest.runner.junit5.jvm)
 }
 
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
+tasks.test {
     useJUnitPlatform()
 }
