@@ -1,8 +1,7 @@
 package io.github.filippovissani
 
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -47,4 +46,43 @@ class FlowExamplesTest {
             flow.collect { value -> println(value) }
         }
     }
+
+    @Test
+    fun simple5() {
+        runBlocking<Unit> {
+            withTimeoutOrNull(250) { // Timeout after 250ms
+                FlowExamples.simple5().collect { value -> println(value) }
+            }
+            println("Done")
+        }
+    }
+
+    @Test
+    fun performRequest() {
+        runBlocking<Unit> {
+            (1..3).asFlow() // a flow of requests
+                .map { request -> FlowExamples.performRequest(request) }
+                .collect { response -> println(response) }
+        }
+    }
+
+    @Test
+    fun performRequest2() {
+        runBlocking<Unit> {
+            (1..3).asFlow() // a flow of requests
+                .transform { request ->
+                    emit("Making request $request")
+                    emit(FlowExamples.performRequest(request))
+                }
+                .collect { response -> println(response) }
+        }
+    }
+
+    @Test
+    fun numbers() =
+        runBlocking<Unit> {
+            FlowExamples.numbers()
+                .take(2) // take only the first two
+                .collect { value -> println(value) }
+        }
 }
