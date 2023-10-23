@@ -88,4 +88,11 @@ object FlowExamples {
             emit(i) // emit next value
         }
     }.flowOn(Dispatchers.Default) // RIGHT way to change context for CPU-consuming code in flow builder
+
+    fun simple9(): Flow<Int> = flow {
+        for (i in 1..3) {
+            delay(100) // pretend we are asynchronously waiting 100 ms
+            emit(i) // emit next value
+        }
+    }
 }
