@@ -7,6 +7,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import kotlin.system.measureTimeMillis
 
 class FlowExamplesTest {
 
@@ -133,5 +134,59 @@ class FlowExamplesTest {
             FlowExamples.simple8().collect { value ->
                 FlowExamples.log("Collected $value")
             }
+        }
+
+    @Test
+    fun simple9() =
+        runBlocking<Unit> {
+            val time = measureTimeMillis {
+                FlowExamples.simple9().collect { value ->
+                    delay(300) // pretend we are processing it for 300 ms
+                    println(value)
+                }
+            }
+            println("Collected in $time ms")
+        }
+
+    @Test
+    fun simple9Buffer() =
+        runBlocking<Unit> {
+            val time = measureTimeMillis {
+                FlowExamples.simple9()
+                    .buffer() // buffer emissions, don't wait
+                    .collect { value ->
+                        delay(300) // pretend we are processing it for 300 ms
+                        println(value)
+                    }
+            }
+            println("Collected in $time ms")
+        }
+
+    @Test
+    fun simple9Conflation() =
+        runBlocking<Unit> {
+            val time = measureTimeMillis {
+                FlowExamples.simple9()
+                    .conflate() // conflate emissions, don't process each one
+                    .collect { value ->
+                        delay(300) // pretend we are processing it for 300 ms
+                        println(value)
+                    }
+            }
+            println("Collected in $time ms")
+        }
+
+    @Test
+    fun simple9CollectLatest() =
+        runBlocking<Unit> {
+            val time = measureTimeMillis {
+                FlowExamples.simple9()
+                    .collectLatest { value -> // cancel & restart on the latest value
+                        println("Collecting $value")
+                        delay(300) // pretend we are processing it for 300 ms
+                        println("Done $value")
+                    }
+            }
+            println("Collected in $time ms")
         }
 }
